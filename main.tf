@@ -5,7 +5,6 @@ provider "google" {
   region      = var.gcp_region
   zone        = var.gcp_zone
 }
-
 resource "google_compute_network" "vpc_network" {
   name = "terraform-network"
 }
