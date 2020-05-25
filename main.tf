@@ -5,7 +5,6 @@ provider "google" {
   region      = var.gcp_region
   zone        = var.gcp_zone
 }
-
 resource "google_compute_network" "vpc_network" {
   name = "terraform-network"
 }
@@ -21,6 +20,14 @@ resource "google_compute_instance" "vm_instance" {
   }
   network_interface {
     network = google_compute_network.vpc_network.name
-    access_config {}
+    access_config {
+      nat_ip = google_compute_address.vm_static_ip.address
+    }
   }
 }
+
+resource "google_compute_address" "vm_static_ip" {
+  name = "terraform-static-ip"
+}
+
+
